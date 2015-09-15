@@ -92,6 +92,10 @@
  */
 @property (weak, nonatomic) id<JSQMessagesCollectionViewCellDelegate> delegate;
 
+// custom labels
+@property (weak, nonatomic, readonly) JSQMessagesLabel *cellTimeLabel;
+@property (weak, nonatomic, readonly) JSQMessagesLabel *cellReceiptLabel;
+
 /**
  *  Returns the label that is pinned to the top of the cell.
  *  This label is most commonly used to display message timestamps.

@@ -24,7 +24,8 @@
 - (instancetype)initWithSenderId:(NSString *)senderId
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
-                         isMedia:(BOOL)isMedia;
+                         isMedia:(BOOL)isMedia
+                         receipt:(NSString *)receipt;
 
 @end
 
@@ -37,21 +38,24 @@
 + (instancetype)messageWithSenderId:(NSString *)senderId
                         displayName:(NSString *)displayName
                                text:(NSString *)text
+                            receipt:(NSString *)receipt
 {
     return [[self alloc] initWithSenderId:senderId
                         senderDisplayName:displayName
                                      date:[NSDate date]
-                                     text:text];
+                                     text:text
+                                  receipt:receipt];
 }
 
 - (instancetype)initWithSenderId:(NSString *)senderId
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
                             text:(NSString *)text
+                         receipt:(NSString *)receipt
 {
     NSParameterAssert(text != nil);
 
-    self = [self initWithSenderId:senderId senderDisplayName:senderDisplayName date:date isMedia:NO];
+    self = [self initWithSenderId:senderId senderDisplayName:senderDisplayName date:date isMedia:NO receipt:receipt];
     if (self) {
         _text = [text copy];
     }
@@ -61,21 +65,24 @@
 + (instancetype)messageWithSenderId:(NSString *)senderId
                         displayName:(NSString *)displayName
                               media:(id<JSQMessageMediaData>)media
+                            receipt:(NSString *)receipt
 {
     return [[self alloc] initWithSenderId:senderId
                         senderDisplayName:displayName
                                      date:[NSDate date]
-                                    media:media];
+                                    media:media
+                                  receipt:receipt];
 }
 
 - (instancetype)initWithSenderId:(NSString *)senderId
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
                            media:(id<JSQMessageMediaData>)media
+                         receipt:(NSString *)receipt
 {
     NSParameterAssert(media != nil);
 
-    self = [self initWithSenderId:senderId senderDisplayName:senderDisplayName date:date isMedia:YES];
+    self = [self initWithSenderId:senderId senderDisplayName:senderDisplayName date:date isMedia:YES receipt:receipt];
     if (self) {
         _media = media;
     }
@@ -86,10 +93,12 @@
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
                          isMedia:(BOOL)isMedia
+                         receipt:(NSString *)receipt
 {
     NSParameterAssert(senderId != nil);
     NSParameterAssert(senderDisplayName != nil);
     NSParameterAssert(date != nil);
+    NSParameterAssert(receipt != nil);
 
     self = [super init];
     if (self) {
@@ -97,6 +106,7 @@
         _senderDisplayName = [senderDisplayName copy];
         _date = [date copy];
         _isMediaMessage = isMedia;
+        _receipt = receipt;
     }
     return self;
 }
@@ -114,6 +124,7 @@
     _date = nil;
     _text = nil;
     _media = nil;
+    _receipt = nil;
 }
 
 - (NSUInteger)messageHash
@@ -144,6 +155,7 @@
     return [self.senderId isEqualToString:aMessage.senderId]
     && [self.senderDisplayName isEqualToString:aMessage.senderDisplayName]
     && ([self.date compare:aMessage.date] == NSOrderedSame)
+    && [self.receipt isEqualToString:aMessage.receipt]
     && hasEqualContent;
 }
 
@@ -155,8 +167,8 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: senderId=%@, senderDisplayName=%@, date=%@, isMediaMessage=%@, text=%@, media=%@>",
-            [self class], self.senderId, self.senderDisplayName, self.date, @(self.isMediaMessage), self.text, self.media];
+    return [NSString stringWithFormat:@"<%@: senderId=%@, senderDisplayName=%@, date=%@, isMediaMessage=%@, text=%@, media=%@, receipt=%@>",
+            [self class], self.senderId, self.senderDisplayName, self.date, @(self.isMediaMessage), self.text, self.media, self.receipt];
 }
 
 - (id)debugQuickLookObject
@@ -176,6 +188,7 @@
         _isMediaMessage = [aDecoder decodeBoolForKey:NSStringFromSelector(@selector(isMediaMessage))];
         _text = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(text))];
         _media = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(media))];
+        _receipt = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(receipt))];
     }
     return self;
 }
@@ -187,6 +200,7 @@
     [aCoder encodeObject:self.date forKey:NSStringFromSelector(@selector(date))];
     [aCoder encodeBool:self.isMediaMessage forKey:NSStringFromSelector(@selector(isMediaMessage))];
     [aCoder encodeObject:self.text forKey:NSStringFromSelector(@selector(text))];
+    [aCoder encodeObject:self.receipt forKey:NSStringFromSelector(@selector(receipt))];
 
     if ([self.media conformsToProtocol:@protocol(NSCoding)]) {
         [aCoder encodeObject:self.media forKey:NSStringFromSelector(@selector(media))];
@@ -201,13 +215,15 @@
         return [[[self class] allocWithZone:zone] initWithSenderId:self.senderId
                                                  senderDisplayName:self.senderDisplayName
                                                               date:self.date
-                                                             media:self.media];
+                                                             media:self.media
+                                                           receipt:self.receipt];
     }
 
     return [[[self class] allocWithZone:zone] initWithSenderId:self.senderId
                                              senderDisplayName:self.senderDisplayName
                                                           date:self.date
-                                                          text:self.text];
+                                                          text:self.text
+                                                       receipt:self.receipt];
 }
 
 @end

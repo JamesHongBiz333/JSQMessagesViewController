@@ -29,6 +29,9 @@
  */
 @interface JSQMessage : NSObject <JSQMessageData, NSCoding, NSCopying>
 
+// custom property
+@property (copy, nonatomic, readonly) NSString *receipt;
+
 /**
  *  Returns the string identifier that uniquely identifies the user who sent the message. 
  */
@@ -80,7 +83,8 @@
  */
 + (instancetype)messageWithSenderId:(NSString *)senderId
                         displayName:(NSString *)displayName
-                               text:(NSString *)text;
+                               text:(NSString *)text
+                            receipt:(NSString *)receipt;
 
 /**
  *  Initializes and returns a message object having the given senderId, senderDisplayName, date, and text.
@@ -97,7 +101,8 @@
 - (instancetype)initWithSenderId:(NSString *)senderId
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
-                            text:(NSString *)text;
+                            text:(NSString *)text
+                         receipt:(NSString *)receipt;
 /**
  *  Initializes and returns a message object having the given senderId, displayName, media,
  *  and current system date.
@@ -112,7 +117,8 @@
  */
 + (instancetype)messageWithSenderId:(NSString *)senderId
                         displayName:(NSString *)displayName
-                              media:(id<JSQMessageMediaData>)media;
+                              media:(id<JSQMessageMediaData>)media
+                            receipt:(NSString *)receipt;
 
 /**
  *  Initializes and returns a message object having the given senderId, displayName, date, and media.
@@ -129,6 +135,7 @@
 - (instancetype)initWithSenderId:(NSString *)senderId
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
-                           media:(id<JSQMessageMediaData>)media;
+                           media:(id<JSQMessageMediaData>)media
+                         receipt:(NSString *)receipt;
 
 @end

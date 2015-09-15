@@ -31,6 +31,10 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
 @interface JSQMessagesCollectionViewCell ()
 
+// custom labels
+@property (weak, nonatomic) IBOutlet JSQMessagesLabel *cellTimeLabel;
+@property (weak, nonatomic) IBOutlet JSQMessagesLabel *cellReceiptLabel;
+
 @property (weak, nonatomic) IBOutlet JSQMessagesLabel *cellTopLabel;
 @property (weak, nonatomic) IBOutlet JSQMessagesLabel *messageBubbleTopLabel;
 @property (weak, nonatomic) IBOutlet JSQMessagesLabel *cellBottomLabel;

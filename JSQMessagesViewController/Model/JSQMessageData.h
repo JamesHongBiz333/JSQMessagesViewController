@@ -35,6 +35,9 @@
 
 @required
 
+// custom property
+- (NSString *)receipt;
+
 /**
  *  @return A string identifier that uniquely identifies the user who sent the message.
  *
