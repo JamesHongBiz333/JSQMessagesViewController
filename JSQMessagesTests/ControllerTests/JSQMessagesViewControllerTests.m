@@ -1,6 +1,6 @@
 //
 //  Created by Jesse Squires
-//  http://www.hexedbits.com
+//  http://www.jessesquires.com
 //
 //
 //  MIT License
@@ -9,10 +9,11 @@
 //
 
 #import <XCTest/XCTest.h>
+
 #import <OCMock/OCMock.h>
 
 #import "JSQMessagesViewController.h"
-#import "JSQDemoViewController.h"
+#import "DemoMessagesViewController.h"
 
 
 @interface JSQMessagesViewController ()
@@ -47,27 +48,37 @@
     XCTAssertNotNil(nib, @"Nib should not be nil");
     
     JSQMessagesViewController *vc = [JSQMessagesViewController messagesViewController];
-    [vc view];
+    vc.senderId = @"senderId";
+    vc.senderDisplayName = @"senderDisplayName";
+
+    [vc beginAppearanceTransition:YES animated:NO];
+    [vc endAppearanceTransition];
+
     XCTAssertNotNil(vc, @"View controller should not be nil");
     XCTAssertNotNil(vc.view, @"View should not be nil");
     XCTAssertNotNil(vc.collectionView, @"Collection view should not be nil");
     XCTAssertNotNil(vc.inputToolbar, @"Input toolbar should not be nil");
- 
-    XCTAssertEqualObjects(vc.sender, @"JSQDefaultSender", @"Property should be equal to default value");
+    
     XCTAssertEqual(vc.automaticallyAdjustsScrollViewInsets, YES, @"Property should be equal to default value");
+
     XCTAssertEqualObjects(vc.incomingCellIdentifier, [JSQMessagesCollectionViewCellIncoming cellReuseIdentifier], @"Property should be equal to default value");
     XCTAssertEqualObjects(vc.outgoingCellIdentifier, [JSQMessagesCollectionViewCellOutgoing cellReuseIdentifier], @"Property should be equal to default value");
-    XCTAssertEqualObjects(vc.typingIndicatorColor, [UIColor jsq_messageBubbleLightGrayColor], @"Property should be equal to default value");
+
     XCTAssertEqual(vc.showTypingIndicator, NO, @"Property should be equal to default value");
     XCTAssertEqual(vc.showLoadEarlierMessagesHeader, NO, @"Property should be equal to default value");
 }
 
 - (void)testJSQMessagesViewControllerSubclassInitProgramatically
 {
-    JSQDemoViewController *demoVC = [JSQDemoViewController messagesViewController];
-    [demoVC view];
+    DemoMessagesViewController *demoVC = [DemoMessagesViewController messagesViewController];
+    demoVC.senderId = @"senderId";
+    demoVC.senderDisplayName = @"senderDisplayName";
+
+    [demoVC beginAppearanceTransition:YES animated:NO];
+    [demoVC endAppearanceTransition];
+
     XCTAssertNotNil(demoVC, @"View controller should not be nil");
-    XCTAssertTrue([demoVC isKindOfClass:[JSQDemoViewController class]], @"View controller should be kind of class: %@", [JSQDemoViewController class]);
+    XCTAssertTrue([demoVC isKindOfClass:[DemoMessagesViewController class]], @"View controller should be kind of class: %@", [DemoMessagesViewController class]);
     XCTAssertNotNil(demoVC.view, @"View should not be nil");
     XCTAssertNotNil(demoVC.collectionView, @"Collection view should not be nil");
     XCTAssertNotNil(demoVC.inputToolbar, @"Input toolbar should not be nil");
@@ -78,10 +89,15 @@
     UIStoryboard *mainSB = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     XCTAssertNotNil(mainSB, @"Storyboard should not be nil");
     
-    JSQDemoViewController *demoVC = [mainSB instantiateViewControllerWithIdentifier:@"DemoVC"];
-    [demoVC view];
+    DemoMessagesViewController *demoVC = [mainSB instantiateViewControllerWithIdentifier:@"DemoVC"];
+    demoVC.senderId = @"senderId";
+    demoVC.senderDisplayName = @"senderDisplayName";
+
+    [demoVC beginAppearanceTransition:YES animated:NO];
+    [demoVC endAppearanceTransition];
+
     XCTAssertNotNil(demoVC, @"View controller should not be nil");
-    XCTAssertTrue([demoVC isKindOfClass:[JSQDemoViewController class]], @"View controller should be kind of class: %@", [JSQDemoViewController class]);
+    XCTAssertTrue([demoVC isKindOfClass:[DemoMessagesViewController class]], @"View controller should be kind of class: %@", [DemoMessagesViewController class]);
     XCTAssertNotNil(demoVC.view, @"View should not be nil");
     XCTAssertNotNil(demoVC.collectionView, @"Collection view should not be nil");
     XCTAssertNotNil(demoVC.inputToolbar, @"Input toolbar should not be nil");
@@ -90,10 +106,15 @@
 - (void)testViewConfiguration
 {
     JSQMessagesViewController *vc = [JSQMessagesViewController messagesViewController];
-    
+    vc.senderId = @"senderId";
+    vc.senderDisplayName = @"senderDisplayName";
+
     id mockVC = [OCMockObject partialMockForObject:vc];
     [[mockVC expect] jsq_configureMessagesViewController];
-    [vc view];
+
+    [vc beginAppearanceTransition:YES animated:NO];
+    [vc endAppearanceTransition];
+
     [mockVC verify];
 }
 
