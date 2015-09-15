@@ -3,8 +3,11 @@ About this folk
 This fixing is in order to show time and receipt of message in the same row as message content but not by header or footer
 
 Base on original master branch, changing the cell layout by
+
 1, added time label to incoming cell
+
 2, added time label and receipt label to outgoing cell
+
 3, added corresponding properties to JSQMessage, JSQMessageData
 
 
