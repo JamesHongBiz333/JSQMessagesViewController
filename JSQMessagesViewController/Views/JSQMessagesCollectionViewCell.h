@@ -93,6 +93,7 @@
 @property (weak, nonatomic) id<JSQMessagesCollectionViewCellDelegate> delegate;
 
 // custom labels
+@property (weak, nonatomic) IBOutlet UIView *textContentView;
 @property (weak, nonatomic, readonly) JSQMessagesLabel *cellTimeLabel;
 @property (weak, nonatomic, readonly) JSQMessagesLabel *cellReceiptLabel;
 
