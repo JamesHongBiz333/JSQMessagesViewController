@@ -1,3 +1,21 @@
+About this folk
+
+This fixing is in order to show time and receipt of message in the same row as message content but not by header or footer
+
+Base on original master branch, changing the cell layout by
+
+1, added time label to incoming cell
+
+2, added time label and receipt label to outgoing cell
+
+3, added corresponding properties to JSQMessage, JSQMessageData
+
+
+
+
+
+===========================================================
+
 ![JSQMessagesViewController banner](https://raw.githubusercontent.com/jessesquires/JSQMessagesViewController/develop/Assets/jsq_messages_banner.png)
 
 [![Build Status](https://secure.travis-ci.org/jessesquires/JSQMessagesViewController.svg)](http://travis-ci.org/jessesquires/JSQMessagesViewController) [![Version Status](http://img.shields.io/cocoapods/v/JSQMessagesViewController.png)][docsLink] [![license MIT](http://img.shields.io/badge/license-MIT-orange.png)][mitLink] [![codecov.io](https://img.shields.io/codecov/c/github/jessesquires/JSQMessagesViewController.svg)](http://codecov.io/github/jessesquires/JSQMessagesViewController) ![Platform](https://cocoapod-badges.herokuapp.com/p/JSQMessagesViewController/badge.png)
